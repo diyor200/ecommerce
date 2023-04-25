@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
-	fmt.Println("Hello go")
+	router := gin.Default()
+	router.GET("/products", func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{"message": "Products"})
+	})
+
+	router.Run(":8000")
+
 }

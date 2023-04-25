@@ -1,0 +1,44 @@
+-- CREATE TABLE IF NOT EXISTS category (
+-- 		id SERIAL PRIMARY KEY,
+-- 		name VARCHAR(200) NOT NULL
+-- 	);
+
+-- CREATE TABLE IF NOT EXISTS products (
+-- 		id SERIAL PRIMARY KEY,
+-- 		category INTEGER NOT NULL,
+-- 		name VARCHAR(200) NOT NULL,
+-- 		price FLOAT NOT NULL,
+-- 		FOREIGN KEY(category) REFERENCES category(id)
+-- 	);
+	
+-- CREATE TABLE IF NOT EXISTS users (
+--  	id SERIAL PRIMARY KEY,
+--  	firstname VARCHAR(200) NOT NULL,
+--  	lastname VARCHAR(200) NOT NULL
+--  );
+
+-- CREATE TABLE IF NOT EXISTS orders(
+-- 	id SERIAL PRIMARY KEY,
+-- 	userid INTEGER NOT NULL,
+-- 	productid INTEGER NOT NULL
+-- );
+ 
+-- insert into category (name) VALUES('ichimliklar');
+-- insert into products("name", category, price) values('Cola', 1, 15.6), ('Fanta', 1, 14.3);
+-- select * from products
+--  insert into users(firstname, lastname) values('Diyorbek', 'Abdulaxatov')
+--  select * from users
+
+-- INSERT INTO orders(userid, productid) values(1, 1), (1, 2)
+select * from products
+
+-- select users.firstname, users.lastname, products.name, products.price from orders
+-- join users on users.id = orders.userid
+-- join products on products.id = orders.productid
+-- where orders.userid = 1
+
+-- DELETE FROM products where products.id = 2
+-- select * from products
+
+-- UPDATE products Set name = 'Cola Coca', price = 16.9
+-- select * from products
