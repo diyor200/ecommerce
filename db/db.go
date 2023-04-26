@@ -9,18 +9,17 @@ import (
 
 func createTables(db *sql.DB) error {
 	// category jadvali yaratilmoqda
-	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS category (
-		id SERIAL PRIMARY KEY,
-		name VARCHAR(200) NOT NULL
-	)`)
-	if err != nil {
-		return err
-	}
+	// _, err := db.Exec(`CREATE TABLE IF NOT EXISTS category (
+	// 	id SERIAL PRIMARY KEY,
+	// 	name VARCHAR(200) NOT NULL
+	// )`)
+	// if err != nil {
+	// 	return err
+	// }
 
 	// products jadvali yaratilmoqda
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS products (
+	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS products (
 		id SERIAL PRIMARY KEY,
-		category INTEGER NOT NULL,
 		name VARCHAR(200) NOT NULL,
 		price FLOAT NOT NULL
 		FOREIGN KEY(category) REFERENCES
@@ -52,19 +51,35 @@ func createTables(db *sql.DB) error {
 	return nil
 }
 
-func AddCategory(name string, db *sql.DB) error {
-	_, err := db.Exec(`insert into category (name) VALUES($1)`, name)
+// func AddCategory(name string, db *sql.DB) error {
+// 	_, err := db.Exec(`insert into category (name) VALUES($1)`, name)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	return nil
+// }
+
+func AddProduct(product model.Product, db *sql.DB) error {
+	_, err := db.Exec(`insert into products(name, price) values($1, $2)`, product.Name, product.Price)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func AddProduct(product model.Product, db *sql.DB) error {
-	_, err := db.Exec(`insert into products(name, category, price) values($1, $2, $3)`, product.Name, product.Category, product.Price)
+func DeleteProduct(id int, db *sql.DB) error {
+	_, err := db.Exec(`DELETE FROM products
+	WHERE id = $1;
+	
+	IF FOUND THEN
+	  RAISE NOTICE 'Product  has been successfully deleted', <product_id>;
+	ELSE
+	  RAISE NOTICE 'Product  does not exist', <product_id>;
+	END IF;`, id)
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -85,26 +100,26 @@ func AddUser(db *sql.DB) error {
 	return nil
 }
 
-func GetCategory(db *sql.DB) ([]model.Category, error) {
-	rows, err := db.Query(`SELECT * FROM category`)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var categories []model.Category
-	for rows.Next() {
-		category := model.Category{}
-		err := rows.Scan(&category.ID, &category.Name)
-		if err != nil {
-			return nil, err
-		}
+// func GetCategory(db *sql.DB) ([]model.Category, error) {
+// 	rows, err := db.Query(`SELECT * FROM category`)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	defer rows.Close()
+// 	var categories []model.Category
+// 	for rows.Next() {
+// 		category := model.Category{}
+// 		err := rows.Scan(&category.ID, &category.Name)
+// 		if err != nil {
+// 			return nil, err
+// 		}
 
-		categories = append(categories, category)
-	}
+// 		categories = append(categories, category)
+// 	}
 
-	return categories, nil
+// 	return categories, nil
 
-}
+// }
 
 func GetPruduct(id int, db *sql.DB) (model.Product, error) {
 	row, err := db.Query(`SELECT * FROM products WHERE id=$1 LIMIT 1`, id)
@@ -115,13 +130,22 @@ func GetPruduct(id int, db *sql.DB) (model.Product, error) {
 
 	defer row.Close()
 
-	err = row.Scan(&product.ID, &product.Category, &product.Name, &product.Price)
+	err = row.Scan(&product.ID, &product.Name, &product.Price)
 	if err != nil {
 		return product, err
 	}
 
 	return product, nil
 
+}
+
+func UpdateProduct(product model.Product, db *sql.DB) error {
+	_, err := db.Exec("UPDATE products set name=$1, price=$2 where id=$3", product.Name, product.Price, product.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func GetPruducts(db *sql.DB) ([]model.Product, error) {
@@ -136,7 +160,7 @@ func GetPruducts(db *sql.DB) ([]model.Product, error) {
 
 	for rows.Next() {
 		product := model.Product{}
-		err := rows.Scan(&product.ID, &product.Category, &product.Name, &product.Price)
+		err := rows.Scan(&product.ID, &product.Name, &product.Price)
 		if err != nil {
 			return nil, err
 		}

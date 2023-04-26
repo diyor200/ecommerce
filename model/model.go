@@ -1,15 +1,14 @@
 package model
 
-type Category struct {
-	ID   uint   `json:"id"`
-	Name string `json:"name"`
-}
+// type Category struct {
+// 	ID   uint   `json:"id"`
+// 	Name string `json:"name"`
+// }
 
 type Product struct {
-	ID       uint     `json:"id"`
-	Category Category `json:"category"`
-	Name     string   `json:"name"`
-	Price    float64  `json:"price"`
+	ID    int     `json:"id"`
+	Name  string  `json:"name"`
+	Price float64 `json:"price"`
 }
 
 type User struct {
