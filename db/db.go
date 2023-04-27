@@ -7,7 +7,7 @@ import (
 	_ "github.com/xuri/excelize/v2"
 )
 
-func createTables(db *sql.DB) error {
+func CreateTables(db *sql.DB) error {
 	// category jadvali yaratilmoqda
 	// _, err := db.Exec(`CREATE TABLE IF NOT EXISTS category (
 	// 	id SERIAL PRIMARY KEY,
@@ -22,7 +22,6 @@ func createTables(db *sql.DB) error {
 		id SERIAL PRIMARY KEY,
 		name VARCHAR(200) NOT NULL,
 		price FLOAT NOT NULL
-		FOREIGN KEY(category) REFERENCES
 	)`)
 	if err != nil {
 		return err

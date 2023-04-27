@@ -2,9 +2,10 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
+	"log"
 
 	"github.com/diyor200/ecommerce/controllers"
+	"github.com/diyor200/ecommerce/db"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -12,24 +13,29 @@ import (
 func main() {
 	const (
 		port  = "8000"
-		dburl = "postgres://postgres:2001@localhost:5432/testgo?sslmode=disable"
+		dburl = "postgres://you_username:your_password@localhost:5432/dbname?sslmode=disable"
 	)
 
-	db, err := sql.Open("postgres", dburl)
+	DB, err := sql.Open("postgres", dburl)
 	if err != nil {
 		panic(err)
 	}
 
-	defer db.Close()
-	err = db.Ping()
+	defer DB.Close()
+
+	err = DB.Ping()
 	if err != nil {
 		panic(err)
 	}
+	log.Println("Muvaffaqiyatli ulandi!")
 
-	fmt.Println("Successfully connected!")
-
+	err = db.CreateTables(DB)
+	if err != nil {
+		panic("Jadvallarni yaratishda xatolik yuzaga keldi!")
+	}
+	log.Println("Jadvalla yaratildi!")
 	router := gin.Default()
-	controllers.RegisterRoutes(router, db)
+	controllers.RegisterRoutes(router, DB)
 
 	router.Run(":8000")
 
