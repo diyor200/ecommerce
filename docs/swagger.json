@@ -1,21 +1,12 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "This API returns some data",
+        "title": "Ecommerce api",
+        "contact": {},
+        "version": "1.0"
     },
-    "paths": {
-        "/products": {
-            "get": {
-                "description": "API for get all products",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Get Products"
-                ],
-                "summary": "Get all products",
-                "responses": {}
-            }
-        }
-    }
+    "host": "localhost:8000",
+    "basePath": "/",
+    "paths": {}
 }

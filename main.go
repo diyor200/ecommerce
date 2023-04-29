@@ -11,6 +11,12 @@ import (
 	_ "github.com/lib/pq"
 )
 
+// @title Ecommerce api
+// @description This API returns some data
+// @version 1.0
+// @host localhost:8000
+// @BasePath /
+
 func main() {
 	const (
 		port  = "8000"

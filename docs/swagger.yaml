@@ -1,13 +1,9 @@
+basePath: /
+host: localhost:8000
 info:
   contact: {}
-paths:
-  /products:
-    get:
-      description: API for get all products
-      produces:
-      - application/json
-      responses: {}
-      summary: Get all products
-      tags:
-      - Get Products
+  description: This API returns some data
+  title: Ecommerce api
+  version: "1.0"
+paths: {}
 swagger: "2.0"

@@ -18,6 +18,7 @@ func RegisterRoutes(router *gin.Engine, db *sql.DB) {
 	}
 
 	routes := router.Group("/api")
+
 	// GET handlers
 	routes.GET("/products", h.GetProducts)
 	routes.GET("/download", h.DownloadExcel)
@@ -31,5 +32,5 @@ func RegisterRoutes(router *gin.Engine, db *sql.DB) {
 	routes.DELETE("/delete/:id", h.DeleteProduct)
 
 	// swagger handler
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	routes.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }
