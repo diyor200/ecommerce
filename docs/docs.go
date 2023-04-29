@@ -10,7 +10,11 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {},
+        "contact": {
+            "name": "Diyorbek Abdulaxatov",
+            "url": "https://t.me/Diyorbek01_31",
+            "email": "abdulaxatovdiyorbek40@gmail.com"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -22,10 +26,10 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:8000",
-	BasePath:         "/",
+	BasePath:         "/api",
 	Schemes:          []string{},
-	Title:            "Ecommerce api",
-	Description:      "This API returns some data",
+	Title:            "Ecommerce Web Api",
+	Description:      "Ecommerce web site api for exchanging information betwwn client and server",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

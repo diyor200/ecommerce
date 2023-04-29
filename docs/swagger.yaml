@@ -1,9 +1,13 @@
-basePath: /
+basePath: /api
 host: localhost:8000
 info:
-  contact: {}
-  description: This API returns some data
-  title: Ecommerce api
+  contact:
+    email: abdulaxatovdiyorbek40@gmail.com
+    name: Diyorbek Abdulaxatov
+    url: https://t.me/Diyorbek01_31
+  description: Ecommerce web site api for exchanging information betwwn client and
+    server
+  title: Ecommerce Web Api
   version: "1.0"
 paths: {}
 swagger: "2.0"

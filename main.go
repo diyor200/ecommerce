@@ -6,26 +6,26 @@ import (
 
 	"github.com/diyor200/ecommerce/controllers"
 	"github.com/diyor200/ecommerce/db"
-	"github.com/diyor200/ecommerce/docs"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
 
-// @title Ecommerce api
-// @description This API returns some data
-// @version 1.0
-// @host localhost:8000
-// @BasePath /
+// @title           Ecommerce Web Api
+// @version         1.0
+// @description     Ecommerce web site api for exchanging information betwwn client and server
+
+// @contact.name   Diyorbek Abdulaxatov
+// @contact.url    https://t.me/Diyorbek01_31
+// @contact.email  abdulaxatovdiyorbek40@gmail.com
+
+// @host      localhost:8000
+// @BasePath  /api
 
 func main() {
 	const (
 		port  = "8000"
 		dburl = "postgres://postgres:2001@localhost:5432/ecommerce?sslmode=disable"
 	)
-
-	docs.SwaggerInfo.Host = "localhost:8000"
-	docs.SwaggerInfo.BasePath = ""
-	docs.SwaggerInfo.Schemes = []string{"http"}
 
 	DB, err := sql.Open("postgres", dburl)
 	if err != nil {

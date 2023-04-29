@@ -1,12 +1,16 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This API returns some data",
-        "title": "Ecommerce api",
-        "contact": {},
+        "description": "Ecommerce web site api for exchanging information betwwn client and server",
+        "title": "Ecommerce Web Api",
+        "contact": {
+            "name": "Diyorbek Abdulaxatov",
+            "url": "https://t.me/Diyorbek01_31",
+            "email": "abdulaxatovdiyorbek40@gmail.com"
+        },
         "version": "1.0"
     },
     "host": "localhost:8000",
-    "basePath": "/",
+    "basePath": "/api",
     "paths": {}
 }
