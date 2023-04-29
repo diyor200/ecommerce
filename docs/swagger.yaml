@@ -1,0 +1,13 @@
+info:
+  contact: {}
+paths:
+  /products:
+    get:
+      description: API for get all products
+      produces:
+      - application/json
+      responses: {}
+      summary: Get all products
+      tags:
+      - Get Products
+swagger: "2.0"

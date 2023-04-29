@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 // type Category struct {
 // 	ID   uint   `json:"id"`
 // 	Name string `json:"name"`
@@ -12,14 +14,14 @@ type Product struct {
 }
 
 type User struct {
-	ID        uint   `json:"id"`
 	Firstname string `json:"firstname"`
 	Lastname  string `json:"lastname"`
 }
 
 type Orders struct {
-	ID       uint    `json:"id"`
-	User     User    `json:"user"`
-	Products Product `json:"products"`
-	Payment  float64 `json:"payment"`
+	ID          uint       `json:"id"`
+	User        User       `json:"user"`
+	Productname string     `json:"name"`
+	Payment     float64    `json:"payment"`
+	Time        *time.Time `json:"time"`
 }

@@ -28,21 +28,25 @@ func CreateTables(db *sql.DB) error {
 	}
 
 	// users jadvali yaratilmoqda
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS users (
-		id SERIAL PRIMARY KEY,
-		firstname VARCHAR(200) NOT NULL,
-		lastname VARCHAR(200) NOT NULL
-	)`)
-	if err != nil {
-		return err
-	}
+	// _, err = db.Exec(`CREATE TABLE IF NOT EXISTS users (
+	// 	id SERIAL PRIMARY KEY,
+	// 	firstname VARCHAR(200) NOT NULL,
+	// 	lastname VARCHAR(200) NOT NULL,
+	// 	time TIMESTAMP NOT NULL
+	// )`)
+	// if err != nil {
+	// 	return err
+	// }
 
 	// orders jadvali yaratilmoqda
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS orders(
 		id SERIAL PRIMARY KEY,
-		userid INTEGER NOT NULL,
-		productid INTEGER NOT NULL
-	);`)
+		firstname varchar(200) NOT NULL,
+		lastname varchar(200),
+		product_name varchar(200) not null,
+		price FLOAT NOT  NULL,
+		time TIMESTAMP NOT NULL
+);`)
 	if err != nil {
 		return err
 	}
@@ -59,7 +63,8 @@ func CreateTables(db *sql.DB) error {
 // }
 
 func AddProduct(product model.Product, db *sql.DB) error {
-	_, err := db.Exec(`insert into products(name, price) values($1, $2)`, product.Name, product.Price)
+	_, err := db.Exec(`insert into products(name, price) values($1, $2)`,
+		product.Name, product.Price)
 	if err != nil {
 		return err
 	}
@@ -68,13 +73,7 @@ func AddProduct(product model.Product, db *sql.DB) error {
 
 func DeleteProduct(id int, db *sql.DB) error {
 	_, err := db.Exec(`DELETE FROM products
-	WHERE id = $1;
-	
-	IF FOUND THEN
-	  RAISE NOTICE 'Product  has been successfully deleted', <product_id>;
-	ELSE
-	  RAISE NOTICE 'Product  does not exist', <product_id>;
-	END IF;`, id)
+	WHERE id = $1`, id)
 	if err != nil {
 		return err
 	}
@@ -82,22 +81,26 @@ func DeleteProduct(id int, db *sql.DB) error {
 	return nil
 }
 
+// to'g'rilash kerak
 func AddOrders(order model.Orders, db *sql.DB) error {
-	_, err := db.Exec(`INSERT INTO orders(userid, productid) values($1, $2)`, order.User.ID, order.Products.ID)
+	_, err := db.Exec(`INSERT INTO orders(firstname, lastname, product_name, price, "time")
+	 values($1, $2, $3, $4, date_trunc('minute', NOW() AT TIME ZONE 'Asia/Tashkent'))`,
+		order.User.Firstname, order.User.Lastname, order.Productname, order.Payment)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func AddUser(db *sql.DB) error {
-	var user model.User
-	_, err := db.Exec(`insert into users(firstname, lastname) values($1, $2)`, user.Firstname, user.Lastname)
-	if err != nil {
-		return err
-	}
-	return nil
-}
+// func AddUser(db *sql.DB) error {
+// 	var user model.User
+// 	_, err := db.Exec(`insert into users(firstname, lastname, time) values($1, $2, date_trunc('minute', NOW() AT TIME ZONE 'Asia/Tashkent'))`,
+// 		user.Firstname, user.Lastname)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	return nil
+// }
 
 // func GetCategory(db *sql.DB) ([]model.Category, error) {
 // 	rows, err := db.Query(`SELECT * FROM category`)
@@ -121,7 +124,9 @@ func AddUser(db *sql.DB) error {
 // }
 
 func GetPruduct(id int, db *sql.DB) (model.Product, error) {
-	row, err := db.Query(`SELECT * FROM products WHERE id=$1 LIMIT 1`, id)
+	row, err := db.Query(`SELECT * FROM products
+	WHERE id = $1
+	LIMIT 1;`, id)
 	product := model.Product{}
 	if err != nil {
 		return product, err
@@ -129,9 +134,11 @@ func GetPruduct(id int, db *sql.DB) (model.Product, error) {
 
 	defer row.Close()
 
-	err = row.Scan(&product.ID, &product.Name, &product.Price)
-	if err != nil {
-		return product, err
+	if row.Next() {
+		err = row.Scan(&product.ID, &product.Name, &product.Price)
+		if err != nil {
+			return product, err
+		}
 	}
 
 	return product, nil
@@ -170,40 +177,46 @@ func GetPruducts(db *sql.DB) ([]model.Product, error) {
 	return products, nil
 }
 
-func GetUsers(db *sql.DB) ([]model.User, error) {
-	rows, err := db.Query(`SELECT * FROM users`)
+// func GetUsers(db *sql.DB) ([]model.User, error) {
+// 	rows, err := db.Query(`SELECT * FROM users`)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	defer rows.Close()
+
+// 	var users []model.User
+
+// 	for rows.Next() {
+// 		user := model.User{}
+
+// 		err := rows.Scan(&user.ID, &user.Firstname, &user.Lastname)
+// 		if err != nil {
+// 			return nil, err
+// 		}
+
+// 		users = append(users, user)
+// 	}
+
+// 	return users, nil
+// }
+
+func GetOrders(db *sql.DB) ([]model.Orders, error) {
+	orders := []model.Orders{}
+	rows, err := db.Query(`SELECT * FROM orders`)
 	if err != nil {
 		return nil, err
 	}
 
 	defer rows.Close()
 
-	var users []model.User
-
 	for rows.Next() {
-		user := model.User{}
-
-		err := rows.Scan(&user.ID, &user.Firstname, &user.Lastname)
+		order := model.Orders{}
+		err := rows.Scan(&order.ID, &order.User.Firstname, &order.User.Lastname, &order.Productname, &order.Payment, &order.Time)
 		if err != nil {
 			return nil, err
 		}
-
-		users = append(users, user)
+		orders = append(orders, order)
 	}
-
-	return users, nil
-}
-
-func GetOrders(db *sql.DB) error {
-	rows, err := db.Query(`SELECT * FROM orders`)
-	if err != nil {
-		return err
-	}
-
-	defer rows.Close()
-
-	for rows.Next() {
-
-	}
-	return nil
+	return orders, nil
 }

@@ -1,0 +1,21 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/products": {
+            "get": {
+                "description": "API for get all products",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Get Products"
+                ],
+                "summary": "Get all products",
+                "responses": {}
+            }
+        }
+    }
+}

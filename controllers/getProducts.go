@@ -7,6 +7,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Router /products [GET]
+// @Summary Get all products
+// @Description API for get all products
+// @Tags Get Products
+// @Produce json
 func (h handler) GetProducts(ctx *gin.Context) {
 	products, err := db.GetPruducts(h.DB)
 	if err != nil {

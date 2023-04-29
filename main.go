@@ -6,6 +6,7 @@ import (
 
 	"github.com/diyor200/ecommerce/controllers"
 	"github.com/diyor200/ecommerce/db"
+	"github.com/diyor200/ecommerce/docs"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -13,8 +14,12 @@ import (
 func main() {
 	const (
 		port  = "8000"
-		dburl = "postgres://you_username:your_password@localhost:5432/dbname?sslmode=disable"
+		dburl = "postgres://postgres:2001@localhost:5432/ecommerce?sslmode=disable"
 	)
+
+	docs.SwaggerInfo.Host = "localhost:8000"
+	docs.SwaggerInfo.BasePath = ""
+	docs.SwaggerInfo.Schemes = []string{"http"}
 
 	DB, err := sql.Open("postgres", dburl)
 	if err != nil {
