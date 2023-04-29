@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/diyor200/ecommerce/db"
-	_ "github.com/diyor200/ecommerce/db"
 	"github.com/diyor200/ecommerce/model"
 	"github.com/gin-gonic/gin"
 )
