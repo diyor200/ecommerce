@@ -1,13 +1,163 @@
-basePath: /api
-host: localhost:8000
+basePath: /api/v1
+definitions:
+  controllers.AddProductRequestBody:
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+    type: object
+  controllers.BuyRequestBody:
+    properties:
+      firstname:
+        type: string
+      id:
+        type: integer
+      lastname:
+        type: string
+    type: object
+  model.Product:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+    type: object
 info:
   contact:
-    email: abdulaxatovdiyorbek40@gmail.com
-    name: Diyorbek Abdulaxatov
-    url: https://t.me/Diyorbek01_31
-  description: Ecommerce web site api for exchanging information betwwn client and
-    server
-  title: Ecommerce Web Api
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
+  termsOfService: http://swagger.io/terms/
+  title: Ecommerce Web api
   version: "1.0"
-paths: {}
+paths:
+  /api/add/product:
+    post:
+      consumes:
+      - application/json
+      description: This API endpoint is used to add a new product to the database.
+      parameters:
+      - description: Product Name and Price
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.AddProductRequestBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: 'message: Muvaffaqiyatli qo''shildi!'
+          schema:
+            type: string
+        "400":
+          description: 'message: Bad Request'
+          schema:
+            type: string
+      summary: Add a new product
+      tags:
+      - Products
+  /api/buy:
+    post:
+      consumes:
+      - application/json
+      description: This API endpoint is used to buy a product.
+      parameters:
+      - description: Product ID and user's firstname and lastname
+        in: body
+        name: id
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.BuyRequestBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: 'message: Muvaffaqiyatli harid qilindi!'
+          schema:
+            type: string
+        "400":
+          description: 'message: Harid qilishda muammo yuzga keldi, qaytadan urinib
+            ko''ring !'
+          schema:
+            type: string
+        "404":
+          description: 'message: Not Found'
+          schema:
+            type: string
+      summary: Buy a product
+      tags:
+      - Products
+  /api/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a product by ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: error
+      summary: Delete a Product
+      tags:
+      - Products
+  /api/products:
+    get:
+      description: Get a list of all products
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: error
+      summary: Get Products
+      tags:
+      - Products
+  /api/products/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Update an existing product by ID
+      parameters:
+      - description: Product ID to update
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated product details
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/model.Product'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: 'message: Muvaffaqiyatli o''zgartirildi!'
+          schema:
+            type: string
+        "404":
+          description: 'message: Bunday id dagi product yo''q!'
+          schema:
+            type: string
+      summary: Update a product
+      tags:
+      - Products
+securityDefinitions:
+  BasicAuth:
+    type: basic
 swagger: "2.0"

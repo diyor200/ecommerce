@@ -6,26 +6,33 @@ import (
 
 	"github.com/diyor200/ecommerce/controllers"
 	"github.com/diyor200/ecommerce/db"
+	"github.com/diyor200/ecommerce/docs"
+	_ "github.com/diyor200/ecommerce/docs"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
 
-// @title           Ecommerce Web Api
-// @version         1.0
-// @description     Ecommerce web site api for exchanging information betwwn client and server
+//	@title			Ecommerce Web api
+//	@version		1.0
+//	@description	This is a sample server celler server.
+//	@termsOfService	http://swagger.io/terms/
 
-// @contact.name   Diyorbek Abdulaxatov
-// @contact.url    https://t.me/Diyorbek01_31
-// @contact.email  abdulaxatovdiyorbek40@gmail.com
+//	@contact.name	API Support
+//	@contact.url	http://www.swagger.io/support
+//	@contact.email	support@swagger.io
 
-// @host      localhost:8000
-// @BasePath  /api
+//	@BasePath	/api/v1
+
+//	@securityDefinitions.basic	BasicAuth
 
 func main() {
+
 	const (
-		port  = "8000"
 		dburl = "postgres://postgres:2001@localhost:5432/ecommerce?sslmode=disable"
 	)
+
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.BasePath = "/"
 
 	DB, err := sql.Open("postgres", dburl)
 	if err != nil {

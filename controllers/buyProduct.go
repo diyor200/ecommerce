@@ -15,6 +15,17 @@ type BuyRequestBody struct {
 	Lastname   string `json:"lastname"`
 }
 
+// @Summary Buy a product
+// @Description This API endpoint is used to buy a product.
+// @Tags Products
+// @Accept json
+// @Produce json
+// @Param id body BuyRequestBody true "Product ID and user's firstname and lastname"
+// @Success 201 {string} string "message: Muvaffaqiyatli harid qilindi!"
+// @Failure 400 {string} string "message: Harid qilishda muammo yuzga keldi, qaytadan urinib ko'ring !"
+// @Failure 404 {string} string "message: Bunday id dagi product mavjud emas!"
+// @Failure 404 {string} string "message: Not Found"
+// @Router /api/buy [post]
 func (h handler) BuyProduct(ctx *gin.Context) {
 	body := BuyRequestBody{}
 

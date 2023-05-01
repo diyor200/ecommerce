@@ -12,6 +12,15 @@ type DeleteRequestBody struct {
 	ID int
 }
 
+// @Summary Delete a Product
+// @Description Delete a product by ID
+// @Tags Products
+// @Accept json
+// @Produce json
+// @Param id path int true "Product ID"
+// @Success 200
+// @Failure 404 "error"
+// @Router /api/delete/{id} [delete]
 func (h handler) DeleteProduct(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {

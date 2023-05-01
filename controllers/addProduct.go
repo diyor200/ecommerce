@@ -13,21 +13,15 @@ type AddProductRequestBody struct {
 	Price float64 `json:"price"`
 }
 
-/*
-*
-
-@Summary Adds a new product to the database.
-@Description This endpoint receives a JSON payload containing the product name and price,
-and adds the product to the database if the payload is valid.
-The endpoint returns a success message if the product is added successfully.
-@Tags Products
-@Accept json
-@Produce json
-@Param request body AddProductRequestBody true "Product object that needs to be added to the database"
-@Success 201 {object} gin.H{"message": "Muvaffaqiyatli qo'shildi!"}
-@Failure 400 {object} error "Bad Request. The request could not be processed."
-@Router /products [post]
-*/
+// @Summary Add a new product
+// @Description This API endpoint is used to add a new product to the database.
+// @Tags Products
+// @Accept json
+// @Produce json
+// @Param body body AddProductRequestBody true "Product Name and Price"
+// @Success 201 {string} string "message: Muvaffaqiyatli qo'shildi!"
+// @Failure 400 {string} string "message: Bad Request"
+// @Router /api/add/product [post]
 func (h handler) AddProduct(ctx *gin.Context) {
 	var product model.Product
 	body := AddProductRequestBody{}
