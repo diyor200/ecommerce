@@ -12,6 +12,9 @@ import (
 	"github.com/xuri/excelize/v2"
 )
 
+// @Summary DownloadExcel returns an excel file with all the orders data.
+// @Description DownloadExcel creates an excel file with all the orders data and sends it as a response to the client.
+// @Router /api/download [get]
 func (h handler) DownloadExcel(ctx *gin.Context) {
 	file, err := prepareExcelFile(h.DB)
 	if err != nil {

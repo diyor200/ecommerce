@@ -139,6 +139,13 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/download": {
+            "get": {
+                "description": "DownloadExcel creates an excel file with all the orders data and sends it as a response to the client.",
+                "summary": "DownloadExcel returns an excel file with all the orders data.",
+                "responses": {}
+            }
+        },
         "/api/products": {
             "get": {
                 "description": "Get a list of all products",

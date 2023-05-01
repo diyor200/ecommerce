@@ -113,6 +113,12 @@ paths:
       summary: Delete a Product
       tags:
       - Products
+  /api/download:
+    get:
+      description: DownloadExcel creates an excel file with all the orders data and
+        sends it as a response to the client.
+      responses: {}
+      summary: DownloadExcel returns an excel file with all the orders data.
   /api/products:
     get:
       description: Get a list of all products
